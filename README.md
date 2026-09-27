@@ -1,5 +1,16 @@
-# Laboratório 1 — ETL + Feature Engineering com Apache Airflow
-IMD3005 - MLOps
+# MLOPS_IMD
+IMD3005 - MLOps — Prof. Adelson de Araújo
+
+Repositório com as atividades práticas da disciplina.
+
+| Laboratório | Tema | Onde está |
+|---|---|---|
+| Laboratório 1 | ETL + Feature Engineering com Apache Airflow | raiz deste repo (`dags/`, `data/`) — detalhes abaixo |
+| Laboratório 2 | Rastreamento de experimentos com Weights & Biases | [lab2_wandb/](lab2_wandb/) — ver README próprio |
+
+---
+
+## Laboratório 1 — ETL + Feature Engineering com Apache Airflow
 
 ## O pipeline
 
@@ -78,11 +89,14 @@ docker compose exec airflow-worker airflow dags trigger feature_engineering_data
 ## Estrutura do projeto
 
 ```
-Aula_Airflow/
+MLOPS_IMD/
 ├── dags/
-│   └── dag_feature_engineering.py
+│   └── dag_feature_engineering.py       (Laboratório 1)
 ├── data/
 │   └── features.csv
+├── lab2_wandb/                          (Laboratório 2 — ver README próprio)
+│   ├── train.py
+│   └── sweep.yaml
 ├── docker-compose.yaml
 └── README.md
 ```
