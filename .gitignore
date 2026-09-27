@@ -1,0 +1,12 @@
+logs/
+plugins/
+config/airflow.cfg
+.env
+*.pyc
+__pycache__/
+
+# Lab 2 (W&B) - ambiente local e artefatos de execucao, nao devem ir pro repo
+lab2_wandb/.venv/
+lab2_wandb/wandb/
+lab2_wandb/*.joblib
+

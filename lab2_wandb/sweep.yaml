@@ -1,0 +1,33 @@
+# Laboratorio 2 - configuracao do W&B Sweep
+# IMD3005 - MLOps
+#
+# Estrategia escolhida: bayes
+#
+# Justificativa: o espaco de busca abaixo tem 4 x 5 x 3 x 3 x 3 = 540
+# combinacoes possiveis. Um grid search exaustivo custaria 540 runs (caro e
+# lento so para praticar o W&B); random search e barato mas nao usa o
+# resultado dos runs anteriores para guiar a busca -- pode gastar runs em
+# regioes ja sabidamente ruins. O bayes usa um modelo probabilistico que
+# aprende com os runs ja executados e direciona a busca para as regioes mais
+# promissoras do espaco, dando melhor resultado por run gasto -- bom encaixe
+# para um espaco deste tamanho com um numero limitado de tentativas (ex:
+# --count 40, bem abaixo das 540 combinacoes possiveis).
+method: bayes
+
+metric:
+  name: media_f1_macro_cv
+  goal: maximize
+
+parameters:
+  n_estimators:
+    values: [50, 100, 200, 400]
+  max_depth:
+    values: [3, 5, 10, 20, null]
+  min_samples_split:
+    values: [2, 5, 10]
+  min_samples_leaf:
+    values: [1, 2, 4]
+  max_features:
+    values: ["sqrt", "log2", null]
+
+program: train.py
