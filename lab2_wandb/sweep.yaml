@@ -36,3 +36,12 @@ parameters:
     values: ["sqrt", "log2", null]
 
 program: train.py
+
+# Caminho explicito do python do venv -- sem isso, o "wandb agent" as vezes
+# nao herda corretamente o interpretador do ambiente virtual ativado no
+# Windows, e tenta rodar com um python do sistema que nao tem as bibliotecas
+# instaladas (foi o que causou "ModuleNotFoundError: No module named 'joblib'").
+command:
+  - C:/projetos/MLOPS_IMD/lab2_wandb/.venv/Scripts/python.exe
+  - ${program}
+  - ${args}
