@@ -14,6 +14,11 @@
 # --count 40, bem abaixo das 540 combinacoes possiveis).
 method: bayes
 
+# Fixado explicitamente para nao depender do nome que o W&B infere da pasta
+# (sem isso, "wandb sweep" criou o sweep num projeto diferente do que o
+# train.py usa em wandb.init(), o que desassociaria os runs do sweep).
+project: lab2-varredura-hiperparametros
+
 metric:
   name: media_f1_macro_cv
   goal: maximize
