@@ -17,12 +17,11 @@ PROJECT = "lab2-varredura-hiperparametros"
 SWEEP_ID = "w12n99u1"
 MELHOR_RUN_NAME = "melhor-modelo-final"
 
-report = wr.Report(
-    entity=ENTITY,
-    project=PROJECT,
-    title="Laboratorio 2 - Rastreamento de Experimentos com W&B",
-    description="IMD3005 - MLOps | RandomForestClassifier no dataset Breast Cancer Wisconsin, otimizado via sweep bayes",
-    blocks=[
+# URL do Report ja criado -- atualiza em vez de criar um link novo a cada
+# execucao deste script. Deixa em branco ("") na primeira vez.
+REPORT_URL = "https://wandb.ai/tomsouzneto-ufrn/lab2-varredura-hiperparametros/reports/Laboratorio-2---Rastreamento-de-Experimentos-com-W%26B--VmlldzoxODAzOTk3OA=="
+
+novos_blocks = [
         wr.H1("Dataset e modelo"),
         wr.P(
             "Dataset: Breast Cancer Wisconsin (scikit-learn), classificacao binaria, "
@@ -91,8 +90,9 @@ report = wr.Report(
                 )
             ],
             panels=[
-                wr.CustomChart.from_table(
-                    table_name="importancia_features",
+                wr.CustomChart(
+                    query={"summaryTable": {"tableKey": "importancia_features"}},
+                    chart_name="wandb/bar/v0",  # from_table() nao preenche isso -- sem ele o painel fica em branco
                     chart_fields={"label": "caracteristica", "value": "importancia_media"},
                     chart_strings={"title": "Importancia das Features (melhor modelo)"},
                 )
@@ -101,8 +101,19 @@ report = wr.Report(
         wr.H1("Artifacts"),
         wr.P(f"Dataset: https://wandb.ai/{ENTITY}/{PROJECT}/artifacts/dataset/dataset-cancer-mama"),
         wr.P(f"Melhor modelo (alias best): https://wandb.ai/{ENTITY}/{PROJECT}/artifacts/modelo/modelo-8fgorzix"),
-    ],
-)
+]
+
+if REPORT_URL:
+    report = wr.Report.from_url(REPORT_URL)
+    report.blocks = novos_blocks
+else:
+    report = wr.Report(
+        entity=ENTITY,
+        project=PROJECT,
+        title="Laboratorio 2 - Rastreamento de Experimentos com W&B",
+        description="IMD3005 - MLOps | RandomForestClassifier no dataset Breast Cancer Wisconsin, otimizado via sweep bayes",
+        blocks=novos_blocks,
+    )
 
 report.save()
-print("Report criado:", report.url)
+print("Report salvo:", report.url)
